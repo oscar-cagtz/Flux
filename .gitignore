@@ -1,0 +1,38 @@
+# Fold Group Standard Gitignore
+
+# Dependencies
+**/node_modules/
+.pnp
+.pnp.js
+
+# Testing
+/coverage
+
+# Production
+/dist
+/build
+
+# Vite/Local Dev
+.vite
+.temp
+*.local
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# OS Metadata
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Fold Specific logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
