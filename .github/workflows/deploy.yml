@@ -44,6 +44,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
+          cache-dependency-path: './web-app/package-lock.json'
 
       ## Clean up the configuration files from root to avoid version misconfigurations.
       - name: Sever Phantom Workspace Links
@@ -51,17 +52,20 @@ jobs:
 
       ## Download the libraries needed for the site.
       - name: Install Dependencies & Libraries
-        run: npm install
+        run: npm ci
+        working-directory: ./web-app
 
       ## Override any ghost cache or workspace conflicts with tailwind
       ## (This was added to avoid tailwind v4 from sneaking in, it is not really
       ## needed if the issue does not appear again as it was during setup.)
       - name: Force Tailwind v3 Core
         run: npm install tailwindcss@3.4.19 postcss autoprefixer --no-save
+        working-directory: ./web-app
 
       ## Build the site to generate the /dist artifacts.
       - name: Build the Website
         run: npm run build
+        working-directory: ./web-app
 
       ## Handshake with GitHub to set up a GH Pages deployment.
       - name: Setup the GitHub Pages Configuration
