@@ -1621,11 +1621,12 @@ function ContactSection({ lang }) {
 
   // Updated to specific premium corridors of Monterrey
   const coverageZones = [
-    { id: 'sanpedro', name: 'San Pedro G.G.', x: '30%', y: '45%' },
-    { id: 'zonatec', name: 'Zona Tec', x: '50%', y: '55%' },
-    { id: 'contry', name: 'Contry / Zona Sur', x: '60%', y: '65%' },
-    { id: 'estanzuela', name: 'La Estanzuela', x: '55%', y: '75%' },
-    { id: 'nacional', name: 'Carretera Nacional', x: '60%', y: '90%' }
+    { id: 'sanpedro',   name: 'S.P.G.G.',           x: '22%', y: '22%' },
+    { id: 'valleo',     name: 'Valle Oriente',      x: '45%', y: '30%' },
+    { id: 'zonatec',    name: 'Zona Tec',           x: '65%', y: '20%' },
+    { id: 'contry',     name: 'Contry / Zona Sur',  x: '70%', y: '45%' },
+    { id: 'estanzuela', name: 'La Estanzuela',      x: '80%', y: '68%' },
+    { id: 'nacional',   name: 'Carretera Nacional', x: '92%', y: '90%' }
   ];
 
   const packages = [
@@ -1766,19 +1767,11 @@ function ContactSection({ lang }) {
             {/* Graphic Map Area */}
             <div className="flex-1 relative w-full mt-6 rounded-2xl bg-slate-900 border border-slate-700/50 overflow-hidden group shadow-inner">
                 
-                {/* Stock Image Background (You can swap the URL here later to your local PNG) */}
+                {/* Custom Monterrey Map Background */}
                 <div 
                   className="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity transition-opacity duration-700 group-hover:opacity-40" 
-                  style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1518081461904-9d8f136351c2?q=80&w=1000&auto=format&fit=crop")' }} 
+                  style={{ backgroundImage: 'url("./mty-map.png")' }} 
                 ></div>
-
-                {/* Mesh Connecting Lines - Updated to new coordinates */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none z-10 opacity-70">
-                    <line x1="30%" y1="45%" x2="50%" y2="55%" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
-                    <line x1="50%" y1="55%" x2="60%" y2="65%" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
-                    <line x1="60%" y1="65%" x2="55%" y2="75%" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
-                    <line x1="55%" y1="75%" x2="60%" y2="90%" stroke="#475569" strokeWidth="2" strokeDasharray="4 4" />
-                </svg>
 
                 {/* Coverage Nodes & Wi-Fi Heatmap Rings */}
                 {coverageZones.map(zone => (
@@ -1818,27 +1811,100 @@ function ContactSection({ lang }) {
 }
 
 function Footer({ lang }) {
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+
   return (
-    <footer className="bg-white border-t border-slate-200 py-12">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-        
-        {/* REPLACED FOOTER LOGO */}
-        <div className="flex items-center">
-          <img 
-            src="/flux-logo-horizontal-color.svg" 
-            alt="Flux Networks" 
-            className="h-6 md:h-8 w-auto grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all" 
-          />
+    <>
+      <footer className="bg-white border-t border-slate-200 py-12 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center">
+            <img 
+              src="./flux-icon-horizontal-color.svg" 
+              alt="Flux Networks" 
+              className="h-6 md:h-8 w-auto grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all" 
+            />
+          </div>
+          
+          <p className="text-slate-500 text-sm text-center">
+            &copy; {new Date().getFullYear()} <span className="font-bold text-slate-900">Flux</span> Mesh Network Solutions. {t(lang, "A", "Una marca de")} <span className="font-bold text-slate-900">The Fold Group Inc.</span>{lang === 'en' ? ' brand.' : ''}
+          </p>
+          
+          <div className="flex gap-4 text-sm font-bold text-slate-500">
+            <button 
+              onClick={() => setIsPrivacyOpen(true)} 
+              className="hover:text-teal-600 transition-colors"
+            >
+              {t(lang, "Privacy Policy", "Politica de Privacidad")}
+            </button>
+          </div>
         </div>
-        
-        <p className="text-slate-500 text-sm">
-          &copy; {new Date().getFullYear()} Flux Networks. {t(lang, "A", "Una marca de")} <span className="font-bold text-slate-900">Fold Group</span>{lang === 'en' ? ' Brand.' : '.'}
-        </p>
-        <div className="flex gap-4 text-sm font-bold text-slate-500">
-          <a href="#" className="hover:text-teal-600 transition-colors">{t(lang, "Privacy", "Privacidad")}</a>
-          <a href="#" className="hover:text-teal-600 transition-colors">{t(lang, "Terms", "Términos")}</a>
+      </footer>
+
+      {/* Privacy Policy Modal */}
+      {isPrivacyOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+          {/* Blurred Backdrop */}
+          <div 
+            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
+            onClick={() => setIsPrivacyOpen(false)}
+          ></div>
+          
+          {/* Modal Card */}
+          <div className="relative bg-white rounded-3xl w-full max-w-lg shadow-2xl border border-slate-100 animate-in fade-in zoom-in-95 duration-200 overflow-hidden">
+            {/* Top Teal Accent Bar */}
+            <div className="h-2 w-full bg-teal-500"></div>
+            
+            <div className="p-8">
+              <div className="flex justify-between items-start mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-teal-600">
+                    <ShieldCheck className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900">
+                    {t(lang, "Privacy Policy", "Aviso de Privacidad")}
+                  </h3>
+                </div>
+                <button 
+                  onClick={() => setIsPrivacyOpen(false)}
+                  className="text-slate-400 hover:text-slate-600 transition-colors p-1"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+              
+              <div className="space-y-4 text-slate-600 leading-relaxed">
+                <p>
+                  {t(lang,
+                    "At Flux, we take your privacy as seriously as your network security.",
+                    "En Flux, tomamos tu privacidad tan en serio como la seguridad de tu red."
+                  )}
+                </p>
+                <p>
+                  {t(lang,
+                    "Any personal information, contact details, or floor plan descriptions you provide will be exclusively used for the purpose of analyzing your network requirements, verifying coverage zones, and providing an accurate quote.",
+                    "Cualquier información personal, datos de contacto o descripciones de tu domicilio que proporciones se utilizarán exclusivamente con el propósito de analizar tus requerimientos de red, verificar zonas de cobertura y proporcionar una cotización precisa."
+                  )}
+                </p>
+                <p className="font-bold text-slate-900">
+                  {t(lang,
+                    "We do not sell, share, or use your data for third-party marketing.",
+                    "Nosotros no vendemos, compartimos ni utilizamos tus datos para campañas de marketing de terceros."
+                  )}
+                </p>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-slate-100 flex justify-end">
+                <button 
+                  onClick={() => setIsPrivacyOpen(false)}
+                  className="px-6 py-2.5 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors shadow-md"
+                >
+                  {t(lang, "Understood", "Entendido")}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </footer>
+      )}
+    </>
   );
 }
